@@ -47,3 +47,8 @@ PreCommit:
     enabled: true
   Reek:
     enabled: true
+
+PrePush:
+  Brakeman:
+    enabled: true
+    command: ['brakeman', '--no-summary --run-all-checks --branch-limit -1']
