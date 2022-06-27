@@ -6,13 +6,12 @@ permissions:
   contents: read
   pull-requests: write
 jobs:
-  reviewdog:
-    name: reviewdog
+  setup:
+    name: setup
     runs-on: ubuntu-latest
     timeout-minutes: 10
     if: github.event.pull_request.draft == false
     steps:
-
       - name: Checkout code
         uses: actions/checkout@v3
 
@@ -21,6 +20,13 @@ jobs:
         with:
           ruby-version: 2.7.3
 
+  reek:
+    name: reek
+    needs: setup
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    if: github.event.pull_request.draft == false
+    steps:
       - name: Run reek
         uses: reviewdog/action-reek@v1
         with:
@@ -28,6 +34,13 @@ jobs:
           reporter: github-pr-review
           fail_on_error: true
 
+  rubocop:
+    name: rubocop
+    needs: setup
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    if: github.event.pull_request.draft == false
+    steps:
       - name: Run rubocop
         uses: reviewdog/action-rubocop@v2
         with:
