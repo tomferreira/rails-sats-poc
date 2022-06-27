@@ -1,4 +1,4 @@
-name: lint & sast
+name: reviewdog
 on:
   pull_request:
     types: [opened, synchronize, reopened, ready_for_review]
@@ -6,9 +6,8 @@ permissions:
   contents: read
   pull-requests: write
 jobs:
-
-  reek:
-    name: reek
+  lint:
+    name: lint
     runs-on: ubuntu-latest
     timeout-minutes: 10
     if: github.event.pull_request.draft == false
@@ -20,6 +19,40 @@ jobs:
         uses: ruby/setup-ruby@v1
         with:
           ruby-version: 2.7.3
+
+      - name: Run actionlint
+        uses: reviewdog/action-actionlint@v1
+        with:
+          reporter: github-pr-review
+
+      - name: Run hadolint
+        uses: reviewdog/action-hadolint@v1
+        with:
+          reporter: github-pr-review
+
+      - name: Run alex
+        uses: reviewdog/action-alex@v1
+        with:
+          reporter: github-pr-review
+
+      - name: Run detect-secrets
+        uses: reviewdog/action-detect-secrets@master
+        with:
+          reporter: github-pr-review
+
+      - name: Run dotenv-linter
+        uses: dotenv-linter/action-dotenv-linter@v2
+        with:
+          reporter: github-pr-review
+          dotenv_linter_flags: --skip UnorderedKey
+
+      - name: Run rubocop
+        uses: reviewdog/action-rubocop@v2
+        with:
+          rubocop_version: gemfile
+          rubocop_extensions: rubocop-rails:gemfile rubocop-performance:gemfile rubocop-minitest:gemfile
+          reporter: github-pr-review
+          fail_on_error: true
 
       - name: Run reek
         uses: reviewdog/action-reek@v1
@@ -28,8 +61,15 @@ jobs:
           reporter: github-pr-review
           fail_on_error: true
 
-  rubocop:
-    name: rubocop
+      - name: Run rails_best_practices
+        uses: blooper05/action-rails_best_practices@v1
+        with:
+          rails_best_practices_version: gemfile
+          reporter: github-pr-review
+          fail_on_error: true
+
+  sast:
+    name: sast
     runs-on: ubuntu-latest
     timeout-minutes: 10
     if: github.event.pull_request.draft == false
@@ -42,10 +82,10 @@ jobs:
         with:
           ruby-version: 2.7.3
 
-      - name: Run rubocop
-        uses: reviewdog/action-rubocop@v2
+      - name: Run brakeman
+        uses: reviewdog/action-brakeman@v2
         with:
-          rubocop_version: gemfile
-          rubocop_extensions: rubocop-rails:gemfile rubocop-performance:gemfile rubocop-minitest:gemfile
+          brakeman_version: gemfile
+          brakeman_flags: --run-all-checks --branch-limit -1
           reporter: github-pr-review
           fail_on_error: true
