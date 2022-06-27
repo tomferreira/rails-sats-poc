@@ -6,8 +6,8 @@ permissions:
   contents: read
   pull-requests: write
 jobs:
-  rubocop:
-    name: rubocop
+  reviewdog:
+    name: reviewdog
     runs-on: ubuntu-latest
     timeout-minutes: 10
     if: github.event.pull_request.draft == false
@@ -20,6 +20,13 @@ jobs:
         uses: ruby/setup-ruby@v1
         with:
           ruby-version: 2.7.3
+
+      - name: Run reek
+        uses: reviewdog/action-reek@v1
+        with:
+          reek_version: gemfile
+          reporter: github-pr-review
+          fail_on_error: true
 
       - name: Run rubocop
         uses: reviewdog/action-rubocop@v2
