@@ -31,7 +31,6 @@ CommitMsg:
 
 PreCommit:
   ALL:
-    problem_on_unmodified_line: fail
     requires_files: true
     required: false
     quiet: false
@@ -40,7 +39,7 @@ PreCommit:
   RuboCop:
     enabled: true
   ZeitwerkCheck:
-    enabled: false # This project not use Rails 6+ 
+    enabled: false # This project not use Rails 6+
     command: ['bundle', 'exec', 'rails', 'zeitwerk:check']
   RailsSchemaUpToDate:
     enabled: true
