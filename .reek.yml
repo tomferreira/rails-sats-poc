@@ -1,0 +1,55 @@
+### Generic smell configuration
+
+detectors:
+  DuplicateMethodCall:
+    max_calls: 3
+
+  FeatureEnvy:
+    enabled: false
+
+  IrresponsibleModule:
+    enabled: false
+
+  LongParameterList:
+    max_params: 5
+
+  NilCheck:
+    enabled: false
+
+  TooManyInstanceVariables:
+    max_instance_variables: 8
+
+  TooManyConstants:
+    exclude: ['ApplicationPolicy::RoleName']
+
+  TooManyMethods:
+    max_methods: 30
+
+  TooManyStatements:
+    max_statements: 10
+
+  UncommunicativeVariableName:
+    accept:
+      - _
+      - e
+
+  UtilityFunction:
+    enabled: false
+
+directories:
+  "app/controllers":
+    InstanceVariableAssumption:
+      enabled: false
+  "app/models":
+    InstanceVariableAssumption:
+      enabled: false
+  "test":
+    InstanceVariableAssumption:
+      enabled: false
+    TooManyInstanceVariables:
+      enabled: false
+
+# Directories and files below will not be scanned at all
+exclude_paths:
+  - docs
+  - db

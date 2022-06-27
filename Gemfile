@@ -62,6 +62,19 @@ group :development do
 
   # Speed up commands on slow machines / big apps [https://github.com/rails/spring]
   # gem "spring"
+
+  # Manage git hooks
+  gem "overcommit"
+
+  # SAST and linter tools
+  gem "rubocop", "~> 1.30.0", require: false
+  gem "rubocop-performance", "~> 1.14.0", require: false
+  gem "rubocop-rails", "~> 2.15.0", require: false
+  gem "rubocop-minitest", "~> 0.20.0", require: false
+  gem "rails_best_practices", "~> 1.23.0", require: false
+  gem "brakeman", "~> 5.2.0", require: false
+  gem "flay", "~> 2.13.0", require: false
+  gem "reek", "~> 6.1.0", require: false
 end
 
 group :test do
