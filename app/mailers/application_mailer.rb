@@ -8,6 +8,7 @@ class ApplicationMailer < ActionMailer::Base
   def nested_loop
     [1..3].each do |index|
       [4..5].each do |index2|
+        puts index1
         puts index2
       end
     end
