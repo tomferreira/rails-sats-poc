@@ -27,3 +27,4 @@ jobs:
           rubocop_version: gemfile
           rubocop_extensions: rubocop-rails:gemfile rubocop-performance:gemfile rubocop-minitest:gemfile
           reporter: github-pr-review
+          fail_on_error: true
