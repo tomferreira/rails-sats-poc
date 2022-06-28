@@ -36,7 +36,7 @@ jobs:
           reporter: github-pr-review
 
       - name: Run detect-secrets
-        uses: reviewdog/action-detect-secrets@v0
+        uses: reviewdog/action-detect-secrets@master
         with:
           github_token: ${{ github.token }}
           reporter: github-pr-review
@@ -104,6 +104,6 @@ jobs:
 
       - name: Run bundler-audit
         id: bundler_audit
-        uses: andrewmcodes/bundler-audit-action@v0
+        uses: andrewmcodes/bundler-audit-action@main
         env:
           GITHUB_TOKEN: ${{ github.token }}
