@@ -48,6 +48,7 @@ jobs:
           dotenv_linter_flags: --skip UnorderedKey
 
       - name: Run rubocop
+        id: rubocop
         uses: reviewdog/action-rubocop@v2
         continue-on-error: true
         with:
@@ -57,6 +58,7 @@ jobs:
           fail_on_error: true
 
       - name: Run reek
+        id: reek
         uses: reviewdog/action-reek@v1
         continue-on-error: true
         with:
@@ -65,12 +67,17 @@ jobs:
           fail_on_error: true
 
       - name: Run rails_best_practices
+        id: rails_best_practices
         uses: blooper05/action-rails_best_practices@v1
         continue-on-error: true
         with:
           rails_best_practices_version: gemfile
           reporter: github-pr-review
           fail_on_error: true
+
+      - name: Check on failures
+        if: steps.rubocop.outcome != 'success' || steps.reek.outcome != 'success' || steps.rails_best_practices.outcome != 'success'
+        run: exit 1
 
   sast:
     name: sast
@@ -88,7 +95,6 @@ jobs:
 
       - name: Run brakeman
         uses: reviewdog/action-brakeman@v2
-        continue-on-error: true
         with:
           brakeman_version: gemfile
           brakeman_flags: --run-all-checks
