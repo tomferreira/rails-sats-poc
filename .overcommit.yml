@@ -49,8 +49,6 @@ PreCommit:
     enabled: true
   Reek:
     enabled: true
-  Flay:
-    enabled: true
   BundleAudit:
     enabled: true
 
