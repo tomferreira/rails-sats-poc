@@ -36,6 +36,8 @@ PreCommit:
     quiet: false
     on_warn: fail
     on_fail: fail
+  HardTabs:
+    enabled: true
   RuboCop:
     enabled: true
   ZeitwerkCheck:
@@ -47,8 +49,14 @@ PreCommit:
     enabled: true
   Reek:
     enabled: true
+  Flay:
+    enabled: true
+  BundleAudit:
+    enabled: true
 
 PrePush:
   Brakeman:
     enabled: true
-    command: ['brakeman', '--no-summary --run-all-checks --branch-limit -1']
+    flags: ['--exit-on-warn', '--quiet', '--no-summary', '--run-all-checks']
+  Minitest:
+    enabled: true
