@@ -41,6 +41,8 @@ gem "jbuilder"
 # Reduces boot times through caching; required in config/boot.rb
 gem "bootsnap", require: false
 
+gem "date", "2.0.0"
+
 # Use Sass to process CSS
 # gem "sassc-rails"
 
