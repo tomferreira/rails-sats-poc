@@ -38,6 +38,7 @@ jobs:
       - name: Run detect-secrets
         uses: reviewdog/action-detect-secrets@master
         with:
+          github_token: ${{ github.token }}
           reporter: github-pr-review
 
       - name: Run dotenv-linter
