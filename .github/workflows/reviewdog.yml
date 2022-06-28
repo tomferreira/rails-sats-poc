@@ -36,7 +36,7 @@ jobs:
           reporter: github-pr-review
 
       - name: Run detect-secrets
-        uses: reviewdog/action-detect-secrets@master
+        uses: reviewdog/action-detect-secrets@v0
         with:
           github_token: ${{ github.token }}
           reporter: github-pr-review
@@ -96,7 +96,6 @@ jobs:
       - name: Run brakeman
         id: brakeman
         uses: reviewdog/action-brakeman@v2
-        continue-on-error: true
         with:
           brakeman_version: gemfile
           brakeman_flags: --run-all-checks
@@ -105,11 +104,6 @@ jobs:
 
       - name: Run bundler-audit
         id: bundler_audit
-        uses: andrewmcodes/bundler-audit-action@main
-        continue-on-error: true
+        uses: andrewmcodes/bundler-audit-action@v0
         env:
           GITHUB_TOKEN: ${{ github.token }}
-
-      - name: Check on failures
-        if: steps.brakeman.outcome != 'success' || steps.bundler_audit.outcome != 'success'
-        run: exit 1
