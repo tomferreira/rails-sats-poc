@@ -53,21 +53,18 @@ jobs:
           rubocop_version: gemfile
           rubocop_extensions: rubocop-rails:gemfile rubocop-performance:gemfile rubocop-minitest:gemfile
           reporter: github-pr-review
-          fail_on_error: true
 
       - name: Run reek
         uses: reviewdog/action-reek@v1
         with:
           reek_version: gemfile
           reporter: github-pr-review
-          fail_on_error: true
 
       - name: Run rails_best_practices
         uses: blooper05/action-rails_best_practices@v1
         with:
           rails_best_practices_version: gemfile
           reporter: github-pr-review
-          fail_on_error: true
 
   sast:
     name: sast
@@ -89,4 +86,3 @@ jobs:
           brakeman_version: gemfile
           brakeman_flags: --run-all-checks
           reporter: github-pr-review
-          fail_on_error: true
