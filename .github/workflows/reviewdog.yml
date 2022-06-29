@@ -96,6 +96,7 @@ jobs:
       - name: Run brakeman
         id: brakeman
         uses: reviewdog/action-brakeman@v2
+        continue-on-error: true
         with:
           brakeman_version: gemfile
           brakeman_flags: --run-all-checks
@@ -104,6 +105,13 @@ jobs:
 
       - name: Run bundler-audit
         id: bundler_audit
-        uses: andrewmcodes/bundler-audit-action@main
-        env:
-          GITHUB_TOKEN: ${{ github.token }}
+        uses: tomferreira/action-bundler-audit@main
+        continue-on-error: true
+        with:
+          bundler_audit_version: gemfile
+          reporter: github-pr-review
+          fail_on_error: true
+
+      - name: Check on failures
+        if: steps.brakeman.outcome != 'success' || steps.bundler_audit.outcome != 'success'
+        run: exit 1
