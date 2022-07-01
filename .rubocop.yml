@@ -375,9 +375,6 @@ Security/YAMLLoad:
   Enabled: true
   SafeAutoCorrect: false
 
-# Standard/BlockSingleLineBraces:
-#   Enabled: true
-
 Style/Alias:
   Enabled: true
   EnforcedStyle: prefer_alias_method
